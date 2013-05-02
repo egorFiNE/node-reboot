@@ -1,20 +1,20 @@
 # node-reboot
 
-Reboot Linux kernel immediately from node without calling /sbin/shutdown or going thru initscripts. 
+Reboot Linux kernel immediately from node without calling `/sbin/shutdown` or going thru initscripts. 
 
 ## Why? 
 
-I'm running a cluster of Linux servers which boot readonly and perform a memory-intensive computations. node-reboot is a part of a watchdog application, which in case of emergencies much reboot the server immediately without fork()ing another process or going thru upstart/initscripts.
+I'm running a cluster of Linux servers which boot readonly and perform a memory-intensive computations. node-reboot is a part of a watchdog application, which in case of emergencies much reboot the server immediately without `fork()`ing another process or going thru upstart/initscripts.
 
 ## Synopsis
 
-Call sync() and then reboot: 
+Call `sync()` and then reboot: 
 
 ```javascript
 require('reboot').reboot();
 ```
 
-Reboot without sync()ing: 
+Reboot without `sync()`ing: 
 
 ```javascript
 require('reboot').rebootImmediately();
@@ -30,16 +30,20 @@ If you are to run node process under non-superuser, be sure to give node permiss
 sudo setcap CAP_SYS_BOOT=+ep /usr/local/bin/node
 ```
 
-See man capabilities for details.
+See `man capabilities` for details.
 
 
 ## Installation
 
-	npm install reboot
+```
+npm install reboot
+```
 
 or
 
-	npm install .
+```
+npm install .
+```
 
 
 ## License
