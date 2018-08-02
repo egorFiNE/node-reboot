@@ -1,40 +1,41 @@
 #include <node.h>
-#include <v8.h>
 #include <unistd.h>
 #include <sys/reboot.h>
 #ifndef __MACH__
 #include <linux/reboot.h>
 #endif
 
-using namespace v8;
-using namespace node;
+namespace demo {
 
-Handle<Value> _rebootImmediately(const Arguments& args) {
+using v8::FunctionCallbackInfo;
+using v8::Isolate;
+using v8::Local;
+using v8::Object;
+using v8::String;
+using v8::Value;
+
+void _rebootImmediately(const FunctionCallbackInfo<Value>& args) {
 #ifdef __MACH__
-	fprintf(stderr, "Warning: node-reboot on Darwin (OS X) is not supported\n");
-	// reboot(RB_NOSYNC);
+	reboot(RB_QUICK);
 #else
 	reboot(LINUX_REBOOT_CMD_RESTART);
 #endif
-	return Undefined();
 }
-	
-Handle<Value> _reboot(const Arguments &args) {
+
+void _reboot(const FunctionCallbackInfo<Value>& args) {
 #ifdef __MACH__
-	fprintf(stderr, "Warning: node-reboot on Darwin (OS X) is not supported\n");
-	// According to manpage, OS X does sync()
-	// reboot(RB_AUTOBOOT);
+	reboot(0);
 #else
 	sync();
 	reboot(LINUX_REBOOT_CMD_RESTART);
 #endif
-	return Undefined();
 }
 
-extern "C" void
-init (Handle<Object> target) {
-	NODE_SET_METHOD(target, "reboot", _reboot);
-	NODE_SET_METHOD(target, "rebootImmediately", _rebootImmediately);
+void Initialize(Local<Object> exports) {
+  NODE_SET_METHOD(exports, "reboot", _reboot);
+  NODE_SET_METHOD(exports, "rebootImmediately", _rebootImmediately);
 }
 
-NODE_MODULE(reboot_bindings, init);
+NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
+
+}

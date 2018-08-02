@@ -1,13 +1,15 @@
 {
   "name": "reboot",
-  "description": "Quickly reboot Linux from node.js without fork()ing /sbin/shutdown or going thru initscripts",
-	"homepage" : "http://egorfine.github.com/node-reboot",
-	"bugs" : { "url" : "http://github.com/egorFiNE/node-reboot/issues" },
-  "version": "0.0.1",
+  "description": "Quickly reboot Linux/OS X from node.js without fork()ing /sbin/shutdown or going thru initscripts",
+  "homepage": "http://egorfine.github.com/node-reboot",
+  "bugs": {
+    "url": "http://github.com/egorFiNE/node-reboot/issues"
+  },
+  "version": "0.1.0",
   "author": "Egor Egorov",
   "repository": {
     "type": "git",
     "url": "http://github.com/egorfine/node-reboot.git"
   },
-	"main" : "./index"
+  "main": "./index"
 }

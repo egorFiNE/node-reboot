@@ -1,2 +1,6 @@
+0.1.0: Aug 2, 2018
+* updated to Node 10.x
+* macOS support added
+
 0.0.1: May 2, 2013
 * initial release

@@ -1,6 +1,6 @@
 # node-reboot
 
-Reboot Linux kernel immediately from node without calling `/sbin/shutdown` or going thru initscripts. 
+Reboot Linux/macOS kernel immediately from node without calling `/sbin/shutdown` or going thru initscripts. 
 
 ## Why? 
 
@@ -22,7 +22,7 @@ require('reboot').rebootImmediately();
 
 The function should never return. If it does, it means node has insufficient permissions. 
 
-## Permissions
+## Permissions (Linux only)
 
 If you are to run node process under non-superuser, be sure to give node permissions to reboot the system: 
 
@@ -44,10 +44,3 @@ or
 ```
 npm install .
 ```
-
-
-## License
-
-See LICENSE file. Basically, it's a kind of "do-whatever-you-want-for-free" license.
-
-
