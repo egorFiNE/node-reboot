@@ -1,30 +1,52 @@
 #include <node_api.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/reboot.h>
+#ifndef __MACH__
+#include <linux/reboot.h>
+#endif
 
 napi_value Reboot(napi_env env, napi_callback_info info) {
-  sync();
-  printf("reboot world\n");
-  fflush(stdout);
+  #ifdef __MACH__
+    // macOS does sync() before reboot in this mode
+    reboot(RB_AUTOBOOT);
+  #else
+    sync();
+    reboot(LINUX_REBOOT_CMD_RESTART);
+  #endif
+
   return NULL;
 }
 
 napi_value RebootImmediately(napi_env env, napi_callback_info info) {
-  printf("reboot immediately world\n");
-  fflush(stdout);
+  #ifdef __MACH__
+    reboot(RB_NOSYNC);
+  #else
+    reboot(LINUX_REBOOT_CMD_RESTART);
+  #endif
+
   return NULL;
 }
 
 napi_value Halt(napi_env env, napi_callback_info info) {
   sync();
-  printf("halt world\n");
-  fflush(stdout);
+
+  #ifdef __MACH__
+    reboot(RB_HALT);
+  #else
+    reboot(LINUX_REBOOT_CMD_HALT);
+  #endif
+
   return NULL;
 }
 
 napi_value HaltImmediately(napi_env env, napi_callback_info info) {
-  printf("halt immediately world\n");
-  fflush(stdout);
+  #ifdef __MACH__
+    reboot(RB_HALT);
+  #else
+    reboot(LINUX_REBOOT_CMD_HALT);
+  #endif
+
   return NULL;
 }
 
