@@ -1,0 +1,73 @@
+name: prebuild-artifact
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prebuild:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: linux-x64
+          - os: macos-15
+            label: darwin-arm64
+          - os: macos-15-intel
+            label: darwin-x64
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      - uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 25
+          cache: npm
+
+      - run: npm ci --ignore-scripts
+      - run: npx prebuildify --napi --strip
+
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: prebuilds-${{ matrix.label }}
+          path: prebuilds/
+          if-no-files-found: error
+
+  pack:
+    needs: prebuild
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      - uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 25
+          cache: npm
+
+      - run: npm ci --ignore-scripts
+
+      - uses: actions/download-artifact@v7.0.1
+        with:
+          path: artifacts
+
+      - name: Merge prebuilds
+        shell: bash
+        run: |
+          rm -rf prebuilds dist
+          mkdir -p prebuilds dist
+          for dir in artifacts/*; do
+            if [ -d "$dir/prebuilds" ]; then
+              cp -R "$dir/prebuilds/." prebuilds/
+            fi
+          done
+
+      - name: Pack module
+        run: npm pack --pack-destination dist
+
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: reboot-tgz
+          path: dist/*.tgz
+          if-no-files-found: error
