@@ -9,7 +9,7 @@ export const reboot = addon.reboot;
 export const halt = addon.halt;
 
 // Legacy signature from 0.1.0
-export const rebootImmediately = () => addon.rebootImmediately(true);
+export const rebootImmediately = () => addon.reboot(true);
 
 export default {
   reboot,
