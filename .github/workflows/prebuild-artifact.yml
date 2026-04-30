@@ -58,10 +58,11 @@ jobs:
           rm -rf prebuilds dist
           mkdir -p prebuilds dist
           for dir in artifacts/*; do
-            if [ -d "$dir/prebuilds" ]; then
-              cp -R "$dir/prebuilds/." prebuilds/
+            if [ -d "$dir" ]; then
+              cp -R "$dir/." prebuilds/
             fi
           done
+          find prebuilds -type f -print
 
       - name: Pack module
         run: npm pack --pack-destination dist
