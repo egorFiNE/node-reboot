@@ -4,8 +4,15 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const addon = require('node-gyp-build')(dirname(fileURLToPath(import.meta.url)));
+
 export const reboot = addon.reboot;
-export const rebootImmediately = addon.rebootImmediately;
 export const halt = addon.halt;
-export const haltImmediately = addon.haltImmediately;
-export default addon;
+
+// Legacy signature from 0.1.0
+export const rebootImmediately = () => addon.rebootImmediately(true);
+
+export default {
+  reboot,
+  halt,
+  rebootImmediately
+};

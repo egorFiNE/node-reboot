@@ -1,4 +1,5 @@
 0.2.0: Apr 30, 2026
+* method signatures changed (`skipSync` argument added)
 * updated to Node v25.x
 * bun 1.3.x support added
 * updated to ESM with TypeScript

@@ -2,7 +2,7 @@
 
 Immediately reboot or halt Linux/macOS from Node.js or Bun.
 
-This package calls the operating-system reboot APIs directly. It does not call
+This package calls the operating system reboot APIs directly. It does not call
 systemd, shell out, or fork `/sbin/shutdown`.
 
 ## Runtimes supported
@@ -37,7 +37,9 @@ bun add reboot
 
 ## Usage
 
-Sync filesystems, then reboot:
+The module exports two methods, `reboot` and `halt`. Both accept a single boolean argument, which skips `sync()` of filesystems if `true`.
+
+### Sync filesystems, then reboot
 
 ```javascript
 import { reboot } from 'reboot';
@@ -45,25 +47,30 @@ import { reboot } from 'reboot';
 reboot();
 ```
 
-Reboot immediately without syncing filesystems:
+### Reboot immediately without syncing filesystems
 
 ```javascript
-import { rebootImmediately } from 'reboot';
+import { reboot, rebootImmediately } from 'reboot';
 
-rebootImmediately(); // Hasta la vista baby
+reboot(true); // Hasta la vista baby
 ```
 
 The function should not return. If it does return, the process probably does
 not have permission to reboot the system.
 
-The package also exports halt helpers:
+### Halt
+
+The package also exports halt/power off helper. It will try to power off the computer on Linux
+or nobody knows what happens on macOS.
 
 ```javascript
 import { halt, haltImmediately } from 'reboot';
 
+// sync() then halt:
 halt();
-// or
-haltImmediately();
+
+// or halt immediately:
+halt(true);
 ```
 
 ## Permissions

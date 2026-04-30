@@ -1,13 +1,11 @@
 declare const addon: {
-  reboot(): void;
-  rebootImmediately(): void;
-  halt(): void;
-  haltImmediately(): void;
+  reboot(skipSync: boolean): void;
+  halt(skipSync: boolean): void;
 };
 
 export const reboot: typeof addon.reboot;
-export const rebootImmediately: typeof addon.rebootImmediately;
 export const halt: typeof addon.halt;
-export const haltImmediately: typeof addon.haltImmediately;
 
 export default addon;
+
+// `rebootImmediately()` is not declared here because it is a remnant of v0.1.0
