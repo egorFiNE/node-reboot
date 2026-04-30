@@ -1,14 +1,27 @@
 # node-reboot
 
-Immediately reboot Linux/macOS with no systemd calling or fork()ing of `/sbin/shutdown`.
+Immediately reboot or halt Linux/macOS from Node.js or Bun.
 
-This module supports node v24+ (or maybe older) and bun 1.3+.
+This package calls the operating-system reboot APIs directly. It does not call
+systemd, shell out, or fork `/sbin/shutdown`.
+
+## Runtimes supported
+
+- Node.js v24+.
+- Bun 1.3+.
+- Linux and macOS.
+
+Older Node.js versions may work as well.
 
 ## Why?
 
-I'm running a cluster of Linux servers which boot readonly and perform a memory-intensive computations.
+`node-reboot` is intended for watchdog-style applications that need to force an
+immediate machine restart when graceful shutdown is not an option anymore.
 
-node-reboot is a part of a watchdog application that has to reboot the server immediately in case a certain condition is detected. This condition prevents the operating system from shutting down gracefully and hard restart is needed.
+For example, this package was built for a cluster of Linux servers that boot
+read-only and run memory-intensive workloads. When a bad runtime condition is
+detected, the watchdog needs to reboot the server immediately instead of asking
+around nicely.
 
 ## Install
 
@@ -16,45 +29,50 @@ node-reboot is a part of a watchdog application that has to reboot the server im
 npm install reboot
 ```
 
-or
+or:
 
 ```bash
 bun add reboot
 ```
 
-## Synopsis
+## Usage
 
-To `sync()` filesystems and then reboot:
+Sync filesystems, then reboot:
 
 ```javascript
 import { reboot } from 'reboot';
+
 reboot();
 ```
 
-Reboot without `sync()`ing filesystems:
+Reboot immediately without syncing filesystems:
 
 ```javascript
 import { rebootImmediately } from 'reboot';
-rebootImmediately();
+
+rebootImmediately(); // Hasta la vista baby
 ```
 
-The function should never return. If it does, it means node has insufficient permissions.
+The function should not return. If it does return, the process probably does
+not have permission to reboot the system.
 
-For a good measure this module also exports `halt()` and `haltImmediately()`.
+The package also exports halt helpers:
 
-## Permissions (Linux only)
+```javascript
+import { halt, haltImmediately } from 'reboot';
 
-If you are to run node/bun process under non-superuser, be sure to give node/bun permissions to reboot the system:
-
+halt();
+// or
+haltImmediately();
 ```
-sudo setcap CAP_SYS_BOOT=+ep $(which node) # or bun
+
+## Permissions
+
+On Linux, a non-root Node.js or Bun process needs the `CAP_SYS_BOOT` capability
+to reboot the system:
+
+```bash
+sudo setcap CAP_SYS_BOOT=+ep "$(which node)" # or bun
 ```
 
 See `man capabilities` for details.
-
-
-## Installation
-
-```
-npm install reboot
-```
