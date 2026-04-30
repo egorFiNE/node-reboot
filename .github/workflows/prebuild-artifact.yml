@@ -27,11 +27,17 @@ jobs:
 
       - run: npm ci --ignore-scripts
       - run: npx prebuildify --napi --strip
+      - name: Archive prebuilds
+        shell: bash
+        run: |
+          find prebuilds -type f -print
+          mkdir -p artifact
+          tar -czf "artifact/prebuilds-${{ matrix.label }}.tgz" prebuilds
 
       - uses: actions/upload-artifact@v7.0.1
         with:
           name: prebuilds-${{ matrix.label }}
-          path: prebuilds/
+          path: artifact/*.tgz
           if-no-files-found: error
 
   pack:
@@ -57,10 +63,8 @@ jobs:
         run: |
           rm -rf prebuilds dist
           mkdir -p prebuilds dist
-          for dir in artifacts/*; do
-            if [ -d "$dir" ]; then
-              cp -R "$dir/." prebuilds/
-            fi
+          for archive in artifacts/*/*.tgz; do
+            tar -xzf "$archive"
           done
           find prebuilds -type f -print
 
