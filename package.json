@@ -1,9 +1,9 @@
 {
   "name": "reboot",
   "description": "Directly reboot Linux/macOS with no systemd or fork()ing of /sbin/shutdown",
-  "homepage": "http://egorfine.github.com/node-reboot",
+  "homepage": "https://egorfine.github.com/node-reboot",
   "bugs": {
-    "url": "http://github.com/egorFiNE/node-reboot/issues"
+    "url": "https://github.com/egorFiNE/node-reboot/issues"
   },
   "scripts": {
     "build": "node-gyp configure build",
@@ -14,7 +14,7 @@
   "author": "Egor Egorov",
   "repository": {
     "type": "git",
-    "url": "http://github.com/egorfine/node-reboot.git"
+    "url": "https://github.com/egorfine/node-reboot.git"
   },
   "files": [
     "LICENSE",
