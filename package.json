@@ -25,6 +25,7 @@
     "index.d.ts",
     "src/reboot.c"
   ],
+  "license": "MIT",
   "dependencies": {
     "node-gyp-build": "^4.8.4"
   },
