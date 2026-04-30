@@ -11,10 +11,10 @@ jobs:
         include:
           - os: ubuntu-latest
             label: linux-x64
-          - os: macos-15
-            label: darwin-arm64
-          - os: macos-15-intel
-            label: darwin-x64
+          # - os: macos-15
+          #   label: darwin-arm64
+          # - os: macos-15-intel
+          #   label: darwin-x64
     runs-on: ${{ matrix.os }}
 
     steps:
