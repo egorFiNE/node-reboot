@@ -63,9 +63,15 @@ jobs:
         run: |
           rm -rf prebuilds dist
           mkdir -p prebuilds dist
-          for archive in artifacts/*/*.tgz; do
+          find artifacts -maxdepth 3 -type f -print
+          archives="$(find artifacts -type f -name '*.tgz' -print)"
+          if [ -z "$archives" ]; then
+            echo "No prebuild archives found in downloaded artifacts" >&2
+            exit 1
+          fi
+          while IFS= read -r archive; do
             tar -xzf "$archive"
-          done
+          done <<< "$archives"
           find prebuilds -type f -print
 
       - name: Pack module
