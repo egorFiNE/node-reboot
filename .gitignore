@@ -2,3 +2,5 @@ build/
 node_modules
 bun.lock
 prebuilds
+prebuilds-*gz
+dist
