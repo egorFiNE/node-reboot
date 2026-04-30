@@ -1,6 +1,6 @@
 declare const addon: {
-  reboot(skipSync: boolean): void;
-  halt(skipSync: boolean): void;
+  reboot(skipSync?: boolean): void;
+  halt(skipSync?: boolean): void;
 };
 
 export const reboot: typeof addon.reboot;
