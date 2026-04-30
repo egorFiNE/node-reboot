@@ -1,15 +1,26 @@
 {
   "name": "reboot",
-  "description": "Quickly reboot Linux/OS X from node.js without fork()ing /sbin/shutdown or going thru initscripts",
+  "description": "Directly reboot Linux/macOS with no systemd or fork()ing of /sbin/shutdown",
   "homepage": "http://egorfine.github.com/node-reboot",
   "bugs": {
     "url": "http://github.com/egorFiNE/node-reboot/issues"
   },
-  "version": "0.1.0",
+  "scripts": {
+    "build": "node-gyp configure build"
+  },
+  "version": "0.2.0",
+  "gypfile": true,
   "author": "Egor Egorov",
   "repository": {
     "type": "git",
     "url": "http://github.com/egorfine/node-reboot.git"
   },
-  "main": "./index"
+  "devDependencies": {
+    "node-gyp": "^12.3.0"
+  },
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  }
 }

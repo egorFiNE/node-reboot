@@ -1,3 +1,9 @@
+0.2.0: Apr 30, 2026
+* updated to Node v25.x
+* bun 1.3.x support added
+* updated to ESM with TypeScript
+* added `halt`
+
 0.1.0: Aug 2, 2018
 * updated to Node 10.x
 * macOS support added

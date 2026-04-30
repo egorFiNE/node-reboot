@@ -1,8 +1,8 @@
 {
 	"targets": [
 		{
-			"target_name": "reboot_bindings",
-			"sources": [ "src/reboot.cc" ]
+			"target_name": "reboot",
+			"sources": [ "src/reboot.c" ]
 		}
 	]
 }
