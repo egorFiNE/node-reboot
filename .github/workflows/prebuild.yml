@@ -38,45 +38,45 @@ jobs:
           path: artifact/*.tgz
           if-no-files-found: error
 
-  pack:
-    needs: prebuild
-    runs-on: ubuntu-latest
+  # pack:
+  #   needs: prebuild
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v6.0.2
+  #   steps:
+  #     - uses: actions/checkout@v6.0.2
 
-      - uses: actions/setup-node@v6.4.0
-        with:
-          node-version: 24
-          cache: npm
+  #     - uses: actions/setup-node@v6.4.0
+  #       with:
+  #         node-version: 24
+  #         cache: npm
 
-      - run: npm ci --ignore-scripts
+  #     - run: npm ci --ignore-scripts
 
-      - uses: actions/download-artifact@v8.0.1
-        with:
-          path: artifacts
+  #     - uses: actions/download-artifact@v8.0.1
+  #       with:
+  #         path: artifacts
 
-      - name: Merge prebuilds
-        shell: bash
-        run: |
-          rm -rf prebuilds dist
-          mkdir -p prebuilds dist
-          find artifacts -maxdepth 3 -type f -print
-          archives="$(find artifacts -type f -name '*.tgz' -print)"
-          if [ -z "$archives" ]; then
-            echo "No prebuild archives found in downloaded artifacts" >&2
-            exit 1
-          fi
-          while IFS= read -r archive; do
-            tar -xzf "$archive"
-          done <<< "$archives"
-          find prebuilds -type f -print
+  #     - name: Merge prebuilds
+  #       shell: bash
+  #       run: |
+  #         rm -rf prebuilds dist
+  #         mkdir -p prebuilds dist
+  #         find artifacts -maxdepth 3 -type f -print
+  #         archives="$(find artifacts -type f -name '*.tgz' -print)"
+  #         if [ -z "$archives" ]; then
+  #           echo "No prebuild archives found in downloaded artifacts" >&2
+  #           exit 1
+  #         fi
+  #         while IFS= read -r archive; do
+  #           tar -xzf "$archive"
+  #         done <<< "$archives"
+  #         find prebuilds -type f -print
 
-      - name: Pack module
-        run: npm pack --pack-destination dist
+  #     - name: Pack module
+  #       run: npm pack --pack-destination dist
 
-      - uses: actions/upload-artifact@v7.0.1
-        with:
-          name: reboot-tgz
-          path: dist/*.tgz
-          if-no-files-found: error
+  #     - uses: actions/upload-artifact@v7.0.1
+  #       with:
+  #         name: reboot-tgz
+  #         path: dist/*.tgz
+  #         if-no-files-found: error
