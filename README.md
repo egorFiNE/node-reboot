@@ -26,6 +26,8 @@ rebootImmediately();
 
 The function should never return. If it does, it means node has insufficient permissions.
 
+For a good measure this module also exports `halt()` and `haltImmediately()`.
+
 ## Permissions (Linux only)
 
 If you are to run node process under non-superuser, be sure to give node permissions to reboot the system:
