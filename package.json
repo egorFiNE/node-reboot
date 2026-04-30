@@ -6,7 +6,8 @@
     "url": "http://github.com/egorFiNE/node-reboot/issues"
   },
   "scripts": {
-    "build": "node-gyp configure build"
+    "build": "node-gyp configure build",
+    "install": "node-gyp-build"
   },
   "version": "0.2.0",
   "gypfile": true,
@@ -15,10 +16,24 @@
     "type": "git",
     "url": "http://github.com/egorfine/node-reboot.git"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "binding.gyp",
+    "index.mjs",
+    "prebuilds",
+    "index.d.ts",
+    "src/reboot.c"
+  ],
+  "dependencies": {
+    "node-gyp-build": "^4.8.4"
+  },
   "devDependencies": {
-    "node-gyp": "^12.3.0"
+    "node-gyp": "^12.3.0",
+    "prebuildify": "^6.0.1"
   },
   "type": "module",
+  "types": "./index.d.ts",
   "main": "./index.mjs",
   "exports": {
     ".": "./index.mjs"
