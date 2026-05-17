@@ -1,7 +1,6 @@
 {
   "name": "reboot",
   "description": "Directly reboot Linux/macOS with no systemd or fork()ing of /sbin/shutdown",
-  "homepage": "https://egorfine.github.com/node-reboot",
   "bugs": {
     "url": "https://github.com/egorFiNE/node-reboot/issues"
   },
